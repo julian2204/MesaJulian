@@ -1,4 +1,55 @@
-class Usuario{
+class ProductManager{
+    constructor(){
+        this.products = []
+        this.nextId = 0
+    }
+
+    addProduct(product){
+        if(!this.isProductValid(product)){
+            console.log('Error: El producto no es valido')
+            return
+        }
+        if(this.isCodeDuplicate(product.code)){
+            console.log("Error: el código del producto ya existe")
+        }
+        product.id = this.nextId++
+        this.products.push(product)
+
+    }
+
+    getProducts(){
+        return this.products
+    }
+
+    getProductById(id){
+        const product = this.products.find((p)=> p.id === id)
+        if(product){
+            return product
+        }else{
+            console.log("Error: Not Found")
+        }
+    }
+    
+    isProductValid(product){
+        return(
+            product.title &&
+            product.description &&
+            product.price &&
+            product.thumbnail &&
+            product.code &&
+            product.stock !== undefined
+        )
+    }
+
+
+    isCodeDuplicate(code){
+        return this.products.some((p) => p.code === code)
+    }
+}
+
+
+
+/*class Usuario{
     constructor(nombre, apellido, libros, mascotas){
         this.nombre = nombre
         this.apellido = apellido
@@ -31,8 +82,6 @@ class Usuario{
         return books
     } 
 }
-
-/*
 let usuario1 = new Usuario('Julian','Mesa', [], [])
 console.log(usuario1.getFullName())
 console.log(usuario1.getBooks())
